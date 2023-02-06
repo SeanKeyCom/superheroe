@@ -1,0 +1,22 @@
+.mat-form-field {
+  width: 30%;
+  margin: 1rem 1rem 1rem 1rem;
+}
+
+.div-buttons {
+  vertical-align: right;
+}
+
+.button-format {
+  width: 20%;
+  vertical-align: middle;
+  margin: 1rem 2rem 2rem 1rem;
+}
+
+::ng-deep li {
+  mat-form-field {
+    mat-icon.compulsory {
+      color: orange !important;
+    }
+  }
+}

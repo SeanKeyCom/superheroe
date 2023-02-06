@@ -1,0 +1,72 @@
+<h3>Superheroe management</h3>
+
+<div>
+  <div class="">
+    <form [formGroup]="form">
+      <li>
+        <!-- name:       string; -->
+        <mat-form-field appearance="fill">
+          <mat-label>Name:</mat-label>
+          <input matInput toUpperCase toUpperCaseKeyup placeholder="Superheroe name" formControlName="name">
+          <mat-icon matSuffix class="compulsory">*Compulsory field</mat-icon>
+          <mat-hint>Names should be unique but not neccesaryly</mat-hint>
+          <mat-error>Please, enter name</mat-error>
+        </mat-form-field>
+        <!-- /name:       string; -->
+
+        <!-- type:       TypesSuperheroes -->
+        <mat-form-field appearance="fill">
+          <mat-label>Type:</mat-label>
+          <input matInput placeholder="Type of Super Heroe" formControlName="type">
+          <mat-icon matSuffix class="compulsory">*Compulsory field</mat-icon>
+          <mat-hint>Select the proper type: Number ranging from 0 to 3</mat-hint>
+          <mat-error>Please, enter a type value. The value must be between 0 and 3</mat-error>
+        </mat-form-field>
+        <!-- /type:       TypesSuperheroes -->
+
+        <!-- alias?:     string; -->
+        <mat-form-field appearance="fill">
+          <mat-label>Alias:</mat-label>
+          <input matInput placeholder="Superheroe's Alias" formControlName="alias">
+          <mat-icon matSuffix></mat-icon>
+          <mat-hint>Use a suitable alias</mat-hint>
+        </mat-form-field>
+        <!-- /alias?:     string; -->
+      </li>
+
+      <li>
+        <!-- skills?:    number; -->
+        <mat-form-field appearance="fill">
+          <mat-label>Skills:</mat-label>
+          <input matInput placeholder="Amount of power" formControlName="skills">
+          <mat-icon matSuffix></mat-icon>
+          <mat-hint>Use a suitable number. Anything renging from 0 to 100</mat-hint>
+        </mat-form-field>
+        <!-- /skills?:    number; -->
+
+        <!-- power?:     number;  -->
+        <mat-form-field appearance="fill">
+          <mat-label>Power:</mat-label>
+          <input matInput placeholder="The power" formControlName="power">
+          <mat-icon matSuffix>person_outline</mat-icon>
+          <mat-hint>a number meaning the power</mat-hint>
+        </mat-form-field>
+        <!-- /power?:     number;  -->
+
+        <!-- email: string -->
+        <mat-form-field appearance="fill">
+          <mat-label>E-mail:</mat-label>
+          <input matInput placeholder="Superheroe's email" formControlName="email">
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-hint>Use a valid email format, please</mat-hint>
+          <mat-error *ngIf="form?.get('email')?.value !== '' && form?.get('email')?.invalid && form?.get('email')?.dirty">Email format is incorrect</mat-error>
+        </mat-form-field>
+        <!-- /email: string -->
+      </li>
+    </form>
+  </div>
+  <div class="div-buttons">
+    <button mat-button class="button-format" (click)="onSave()">Save</button>
+    <button mat-button class="button-format" (click)="onCancel()">Cancel</button>
+  </div>
+</div>
