@@ -21,6 +21,7 @@ export class SuperheroeService implements OnDestroy {
   public lstSuperheroe$: Observable<ISuperheroe[]> = this.lstSuperheroeBS.asObservable();
 
   private _subscriptions: Subscription[] = [];
+  private INDEX_OUT_OF_BOUNDS: number = -1;
 
 
   constructor() {
@@ -29,24 +30,17 @@ export class SuperheroeService implements OnDestroy {
   }
 
 
-  public getAllSuperheroe() : Observable<ISuperheroe[]> {
-    let result: Observable<ISuperheroe[]>;
-
+  public getAllSuperheroe() : void {
     if(this.lstSuperheroe !== null && this.lstSuperheroe !== undefined && this.lstSuperheroe.length > 0) {
       this.lstSuperheroeBS.next(this.lstSuperheroe);
-      result = of(this.lstSuperheroe).pipe(delay(200));
     } else {
       this.lstSuperheroeBS.next([]);
-      result = EMPTY;
     }
-
-    return result;
   }
 
 
-  public getAllSuperheroeByNameLike(name: string) : Observable<ISuperheroe[]> {
+  public getAllSuperheroeByNameLike(name: string) : void {
     let preResult: ISuperheroe[] = [];
-    let result: Observable<ISuperheroe[]> = EMPTY;
 
     if(name && name!== undefined) {
       if(this.lstSuperheroe !== null && this.lstSuperheroe !== undefined && this.lstSuperheroe.length > 0) {
@@ -57,14 +51,10 @@ export class SuperheroeService implements OnDestroy {
     if(preResult) {
       if(preResult?.length === 0) {
         this.lstSuperheroeBS.next([]);
-        result = EMPTY;
       } else {
         this.lstSuperheroeBS.next(preResult);
-        result = of(preResult).pipe(delay(700));
       }
     }
-
-    return result;
   }
 
 
@@ -84,7 +74,7 @@ export class SuperheroeService implements OnDestroy {
 
 
   public putSuperheroe(pSuperheroe: ISuperheroe) : Observable<ISuperheroe[]> {
-    let position: number = -1;
+    let position: number = this.INDEX_OUT_OF_BOUNDS;
     let superheroe2Bmodified: ISuperheroe | undefined | null = null;
     let result: Observable<ISuperheroe[]>;
 
@@ -92,7 +82,7 @@ export class SuperheroeService implements OnDestroy {
 
     position = superheroe2Bmodified && superheroe2Bmodified !== undefined ?
                 this.lstSuperheroe.indexOf(superheroe2Bmodified)
-                : -1;
+              : this.INDEX_OUT_OF_BOUNDS;
 
     if(position !== null && position !== undefined && position >= 0) {
       this.lstSuperheroe[position] = pSuperheroe;
@@ -107,14 +97,13 @@ export class SuperheroeService implements OnDestroy {
   }
 
 
-  public deleteSuperheroe(superheroe2Bdeleted: ISuperheroe): Observable<ISuperheroe[]> {
-    let position: number = -1;
+  public deleteSuperheroe(superheroe2Bdeleted: ISuperheroe): void {
+    let position: number = this.INDEX_OUT_OF_BOUNDS;
 
     position = this.lstSuperheroe.indexOf(superheroe2Bdeleted);
     this.lstSuperheroe.splice(position, 1);
 
     this.lstSuperheroeBS.next(this.lstSuperheroe);
-    return of(this.lstSuperheroe).pipe(delay(1100));
   }
 
 
@@ -196,19 +185,19 @@ export class SuperheroeService implements OnDestroy {
   public testMethodsService() : void {
     let sub: Subscription;
 
-    sub = this.getAllSuperheroe().subscribe({
-      next: (superheroe: ISuperheroe[]) => {
-        console.log('getAllSuperheroe() - next - superheroe:', superheroe);
-      },
-      error: (err) => {
-        console.error('getAllSuperheroe() - error:', err);
-      },
-      complete: () => {
-          console.log('getAllSuperheroe() - complete');
-      }
-    });
+    // sub = this.getAllSuperheroe().subscribe({
+    //   next: (superheroe: ISuperheroe[]) => {
+    //     console.log('getAllSuperheroe() - next - superheroe:', superheroe);
+    //   },
+    //   error: (err) => {
+    //     console.error('getAllSuperheroe() - error:', err);
+    //   },
+    //   complete: () => {
+    //       console.log('getAllSuperheroe() - complete');
+    //   }
+    // });
 
-    this._subscriptions.push(sub);
+    //this._subscriptions.push(sub);
 
     /** ** **** ** **** ** **** ** **** ** **** ** **/
 
@@ -229,34 +218,34 @@ export class SuperheroeService implements OnDestroy {
     /** ** **** ** **** ** **** ** **** ** **** ** **/
 
     //matching
-    sub = this.getAllSuperheroeByNameLike('Iba').subscribe({
-      next: (superheroes: ISuperheroe[]) => {
-        console.log('getAllSuperheroeByNameLike(name: string) : Observable<ISuperheroe[]> - next - superheroes', superheroes);
-      },
-      error: (err) => {
-        console.error('getAllSuperheroeByNameLike - error:', err);
-      },
-      complete: () => {
-        console.log('getAllSuperheroeByNameLike - complete - superhero:');
-      }
-    });
+    // sub = this.getAllSuperheroeByNameLike('Iba').subscribe({
+    //   next: (superheroes: ISuperheroe[]) => {
+    //     console.log('getAllSuperheroeByNameLike(name: string) : Observable<ISuperheroe[]> - next - superheroes', superheroes);
+    //   },
+    //   error: (err) => {
+    //     console.error('getAllSuperheroeByNameLike - error:', err);
+    //   },
+    //   complete: () => {
+    //     console.log('getAllSuperheroeByNameLike - complete - superhero:');
+    //   }
+    // });
 
-    this._subscriptions.push(sub);
+    // this._subscriptions.push(sub);
 
     /** ** **** ** **** ** **** ** **** ** **** ** **/
 
     //not matching
-    sub = this.getAllSuperheroeByNameLike('XYZ').subscribe({
-      next: (superheroes: ISuperheroe[]) => {
-        console.log('getAllSuperheroeByNameLike(name: string) : Observable<ISuperheroe[]> - next - superheroes:', superheroes);
-      },
-      error: (err) => {
-        console.error('getAllSuperheroeByNameLike - error:', err);
-      },
-      complete: () => {
-        console.log('getAllSuperheroeByNameLike - complete - superhero:');
-      }
-    });
+    // sub = this.getAllSuperheroeByNameLike('XYZ').subscribe({
+    //   next: (superheroes: ISuperheroe[]) => {
+    //     console.log('getAllSuperheroeByNameLike(name: string) : Observable<ISuperheroe[]> - next - superheroes:', superheroes);
+    //   },
+    //   error: (err) => {
+    //     console.error('getAllSuperheroeByNameLike - error:', err);
+    //   },
+    //   complete: () => {
+    //     console.log('getAllSuperheroeByNameLike - complete - superhero:');
+    //   }
+    // });
 
     this._subscriptions.push(sub);
 
@@ -311,17 +300,17 @@ export class SuperheroeService implements OnDestroy {
 
     let auxSuperHeroeMatching2delete: ISuperheroe = {id: 0, type: TypesSuperheroes.SUPER_STRENGTH, alias: '1111111', name: 'LadyGaGa1', skills: 11, power: 1, email: '1@one.tw'};
 
-    sub = this.deleteSuperheroe(auxSuperHeroeMatching2delete).subscribe({
-      next: (lstSuperheroe: ISuperheroe[]) => {
-        console.log('deleteSuperheroe - next - listA after deletion:', lstSuperheroe);
-      },
-      error: (err) => {
-        console.error('deleteSuperheroe() - error - err:', err);
-      },
-      complete: () => {
-        console.log('deleteSuperheroe() - complete');
-      }
-    });
+    // sub = this.deleteSuperheroe(auxSuperHeroeMatching2delete).subscribe({
+    //   next: (lstSuperheroe: ISuperheroe[]) => {
+    //     console.log('deleteSuperheroe - next - listA after deletion:', lstSuperheroe);
+    //   },
+    //   error: (err) => {
+    //     console.error('deleteSuperheroe() - error - err:', err);
+    //   },
+    //   complete: () => {
+    //     console.log('deleteSuperheroe() - complete');
+    //   }
+    // });
 
     this._subscriptions.push(sub);
 

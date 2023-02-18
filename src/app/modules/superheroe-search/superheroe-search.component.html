@@ -1,16 +1,15 @@
 <div class="card">
   <form [formGroup]="form">
     <!-- Filtering field -->
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="filter">
       <mat-label>Filter</mat-label>
       <input matInput toUpperCaseKeyup placeholder="Search superheroes by name like..." #nameFilter id="nameFilter" (keyup)="filterTable()" formControlName="nameFilter">
-      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
       <mat-hint>Filtering</mat-hint>
     </mat-form-field>
     <!-- /Filtering field -->
 
     <!-- It opens form for a new Superheroe -->
-    <button mat-button (click)="onNew()">Add new Superheroe</button>
+    <button mat-button (click)="onNew()" class="button-format">Add new Superheroe</button>
     <!-- /It opens form for a new Superheroe -->
   </form>
 
@@ -62,17 +61,17 @@
       </ng-container>
 
       <-- Actions -->
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef> Actions </th>
-          <mat-cell *matCellDef="let row">
-            <button mat-button (click)="onEdit(row)" class="button-format">Edit</button>
-            <button mat-button (click)="onDelete(row)" class="button-format">Delete</button>
-          </mat-cell>
-        </ng-container>
-        <-- /Actions -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <mat-cell *matCellDef="let row">
+          <button mat-button (click)="onEdit(row)" class="button-format">Edit</button>
+          <button mat-button (click)="onDelete(row)" class="button-format">Delete</button>
+        </mat-cell>
+      </ng-container>
+      <-- /Actions -->
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of Superheroes">
