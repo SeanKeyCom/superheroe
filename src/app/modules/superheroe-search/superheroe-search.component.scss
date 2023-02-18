@@ -12,3 +12,27 @@ table {
   vertical-align: middle;
   margin: 1rem 2rem 2rem 1rem;
 }
+
+.filter {
+  width:30rem;
+  margin: 1rem 2rem 2rem 1rem;
+}
+
+// Center content vertically and horizontally:
+:host{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+}
+
+// Display content in a column
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  h1{
+      // Adjust margin-bottom:
+      margin-bottom: 1rem;
+  }
+}
