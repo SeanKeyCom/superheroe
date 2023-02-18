@@ -1,9 +1,11 @@
 <div class="card">
   <form [formGroup]="form">
     <!-- Filtering field -->
-    <mat-form-field appearance="standard">
+    <mat-form-field appearance="fill">
       <mat-label>Filter</mat-label>
       <input matInput toUpperCaseKeyup placeholder="Search superheroes by name like..." #nameFilter id="nameFilter" (keyup)="filterTable()" formControlName="nameFilter">
+      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      <mat-hint>Filtering</mat-hint>
     </mat-form-field>
     <!-- /Filtering field -->
 
