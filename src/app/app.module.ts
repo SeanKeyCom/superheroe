@@ -19,6 +19,7 @@ import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 import { ToUpperCaseKeyupDirective } from './shared/directives/to-upper-case-keyup.directive';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { FilterComponent } from './modules/superheroe-search/filter/filter.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { BrowserModule } from '@angular/platform-browser';
     SuperheroeManagementComponent,
     DeleteDialogComponent,
     ToUpperCaseDirective,
-    ToUpperCaseKeyupDirective
+    ToUpperCaseKeyupDirective,
+    FilterComponent
   ],
   imports: [
     BrowserModule,

@@ -23,13 +23,13 @@ export class SuperheroeSearchComponent implements OnInit, AfterViewInit  {
   public dataSource: MatTableDataSource<ISuperheroe>;
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
 
-  public form: FormGroup = this._fb.group({nameFilter: [null]});
+  //public form: FormGroup = this._fb.group({nameFilter: [null]});
 
   private _subscriptions: Subscription[] = [];
 
   constructor(
     private readonly _superheroeservice: SuperheroeService,
-    private readonly _fb: FormBuilder,
+    //private readonly _fb: FormBuilder,
     private readonly _route: Router,
     public dialog: MatDialog
   ) {
@@ -62,17 +62,17 @@ export class SuperheroeSearchComponent implements OnInit, AfterViewInit  {
   }
 
 
-  public filterTable(): void {
-    let nameFilterValue: string | null | undefined = this?.form?.get('nameFilter')?.value;
+  // public filterTable(): void {
+  //   let nameFilterValue: string | null | undefined = this?.form?.get('nameFilter')?.value;
 
-    if(nameFilterValue !== null && nameFilterValue !== undefined && nameFilterValue!=='') {
-      setTimeout(() => this._superheroeservice.getAllSuperheroeByNameLike(this?.form?.get('nameFilter')?.value.toUpperCase()),
-                 400);
-    } else {
-      //We are not subscribing to this because we are just interested in the execution of .next() which will do the job
-      this._superheroeservice.getAllSuperheroe();
-    }
-  }
+  //   if(nameFilterValue !== null && nameFilterValue !== undefined && nameFilterValue!=='') {
+  //     setTimeout(() => this._superheroeservice.getAllSuperheroeByNameLike(this?.form?.get('nameFilter')?.value.toUpperCase()),
+  //                400);
+  //   } else {
+  //     //We are not subscribing to this because we are just interested in the execution of .next() which will do the job
+  //     this._superheroeservice.getAllSuperheroe();
+  //   }
+  // }
 
 
   /** Buttons actions **/
@@ -142,9 +142,9 @@ export class SuperheroeSearchComponent implements OnInit, AfterViewInit  {
   }
 
 
-  public onNew(): void {
-    this._route.navigate(['/management']);
-  }
+  // public onNew(): void {
+  //   this._route.navigate(['/management']);
+  // }
   /** /Buttons actions */
 
 

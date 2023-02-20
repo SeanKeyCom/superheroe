@@ -1,5 +1,6 @@
 import { SuperheroeService } from 'src/app/shared/services/superheroe.service';
 import { Component } from '@angular/core';
+import { auxiliaryService } from './shared/services/auxiliary.service';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +10,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'Super Heroes';
 
-  constructor(private readonly _superheroeservice: SuperheroeService) {
-    //This set eleven registers to start working with
-    this._superheroeservice.setStartingDummyLoad();
+  constructor() {
    }
 
 }

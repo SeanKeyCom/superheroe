@@ -1,17 +1,14 @@
 <div class="card">
-  <form [formGroup]="form">
-    <!-- Filtering field -->
+  <!-- <form [formGroup]="form">
     <mat-form-field appearance="fill" class="filter">
       <mat-label>Filter</mat-label>
       <input matInput toUpperCaseKeyup placeholder="Search superheroes by name like..." #nameFilter id="nameFilter" (keyup)="filterTable()" formControlName="nameFilter">
       <mat-hint>Filtering</mat-hint>
     </mat-form-field>
-    <!-- /Filtering field -->
 
-    <!-- It opens form for a new Superheroe -->
     <button mat-button (click)="onNew()" class="button-format">Add new Superheroe</button>
-    <!-- /It opens form for a new Superheroe -->
-  </form>
+  </form> -->
+  <app-filter></app-filter>
 
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" aria-label="Superheroes management">
