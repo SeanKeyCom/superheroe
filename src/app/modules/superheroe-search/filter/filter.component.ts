@@ -12,7 +12,7 @@ import { SuperheroeService } from 'src/app/shared/services/superheroe.service';
 
 export class FilterComponent {
   @Output()
-  public name2Bfiltered = new EventEmitter();
+  public name2Bfiltered: EventEmitter<string> = new EventEmitter<string>();
   public form: FormGroup = this._fb.group({nameFilter: [null]});
   
   constructor(private readonly _route: Router,
