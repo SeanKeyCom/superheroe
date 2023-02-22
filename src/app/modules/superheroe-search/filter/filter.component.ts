@@ -1,14 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SuperheroeService } from 'src/app/shared/services/superheroe.service';
+
 
 @Component({
   selector: 'app-filter',
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss']
 })
+
 export class FilterComponent {
+  @Output()
+  public name2Bfiltered = new EventEmitter();
   public form: FormGroup = this._fb.group({nameFilter: [null]});
   
   constructor(private readonly _route: Router,
@@ -23,12 +27,9 @@ export class FilterComponent {
   public filterTable(): void {
     let nameFilterValue: string | null | undefined = this?.form?.get('nameFilter')?.value;
 
-    if(nameFilterValue !== null && nameFilterValue !== undefined && nameFilterValue!=='') {
-      setTimeout(() => this._superheroeservice.getAllSuperheroeByNameLike(this?.form?.get('nameFilter')?.value.toUpperCase()),
-                 400);
-    } else {
-      //We are not subscribing to this because we are just interested in the execution of .next() which will do the job
-      this._superheroeservice.getAllSuperheroe();
-    }
+    if(nameFilterValue !== null && nameFilterValue !== undefined) {
+      //FIXME: Could be improved by using a debounce()
+      this.name2Bfiltered.emit(nameFilterValue.toUpperCase());
+    } 
   }
 }

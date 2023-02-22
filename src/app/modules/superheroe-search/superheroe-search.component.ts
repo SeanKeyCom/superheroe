@@ -147,6 +147,18 @@ export class SuperheroeSearchComponent implements OnInit, AfterViewInit  {
   // }
   /** /Buttons actions */
 
+  public filteringTable(filterValue: string) : void {
+    if(filterValue !== null && filterValue !== undefined) {
+      if(filterValue!=='') {
+        //FIXME: Could be improved using a debounce()
+        this._superheroeservice.getAllSuperheroeByNameLike(filterValue);
+        return;
+      }
+    } 
+
+    //We are not subscribing to this because we are just interested in the execution of .next() which will do the job
+    this._superheroeservice.getAllSuperheroe();
+  }
 
   ngOnDestroy(): void {
     this._subscriptions.forEach((sub: Subscription) => { sub?.unsubscribe(); });
