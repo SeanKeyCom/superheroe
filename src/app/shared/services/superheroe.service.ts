@@ -125,7 +125,6 @@ export class SuperheroeService implements OnDestroy {
   }
 
 
-
     ngOnDestroy(): void {
       this._subscriptions.forEach((sub: Subscription) => { sub?.unsubscribe(); });
     }

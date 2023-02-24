@@ -1,6 +1,6 @@
 import { DeleteDialogComponent } from './../../shared/components/dialog-modal/delete-dialog/delete-dialog.component';
 import { ISuperheroe } from './../../core/models/superheroe.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, isDevMode, OnInit } from '@angular/core';
 import { SuperheroeService } from 'src/app/shared/services/superheroe.service';
 import { Router } from '@angular/router';
 import {AfterViewInit, ViewChild} from '@angular/core';
@@ -10,8 +10,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
 
+import { Subscription } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-superheroe-search',
@@ -23,15 +26,13 @@ export class SuperheroeSearchComponent implements OnInit, AfterViewInit  {
   public dataSource: MatTableDataSource<ISuperheroe>;
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
 
-  //public form: FormGroup = this._fb.group({nameFilter: [null]});
-
   private _subscriptions: Subscription[] = [];
 
   constructor(
     private readonly _superheroeservice: SuperheroeService,
-    //private readonly _fb: FormBuilder,
     private readonly _route: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private http: HttpClient
   ) {
     this.dataSource = new MatTableDataSource<ISuperheroe>(this._superheroeservice.lstSuperheroe);
   }
@@ -46,10 +47,10 @@ export class SuperheroeSearchComponent implements OnInit, AfterViewInit  {
         this.dataSource.paginator = this.paginator
       },
       error: (err) => {
-        console.error('superheroe-search - ngOnInit - error err:', err);
+        environment.disableLog ? null : console.error('superheroe-search - ngOnInit - error err:', err);
       },
       complete: () => {
-        console.log('superheroe-search - ngOnInit - complete');
+        environment.disableLog ? null : console.log('superheroe-search - ngOnInit - complete');
       }
     });
 
@@ -62,30 +63,17 @@ export class SuperheroeSearchComponent implements OnInit, AfterViewInit  {
   }
 
 
-  // public filterTable(): void {
-  //   let nameFilterValue: string | null | undefined = this?.form?.get('nameFilter')?.value;
-
-  //   if(nameFilterValue !== null && nameFilterValue !== undefined && nameFilterValue!=='') {
-  //     setTimeout(() => this._superheroeservice.getAllSuperheroeByNameLike(this?.form?.get('nameFilter')?.value.toUpperCase()),
-  //                400);
-  //   } else {
-  //     //We are not subscribing to this because we are just interested in the execution of .next() which will do the job
-  //     this._superheroeservice.getAllSuperheroe();
-  //   }
-  // }
-
-
   /** Buttons actions **/
   public onEdit(row: any): void {
     let superheroe: ISuperheroe;
 
-    console.log('superheroe-search.component - onEdit - row:', row);
+    environment.disableLog ? null : console.log('superheroe-search.component - onEdit - row:', row);
 
     if(row!== undefined && row !== null) {
       superheroe = row as ISuperheroe;
       this._route.navigate(['/management', superheroe.id]);
     } else {
-        console.error('There is a problem with the data of the row');
+        environment.disableLog ? null : console.error('There is a problem with the data of the row');
     }
   }
 
@@ -105,20 +93,20 @@ export class SuperheroeSearchComponent implements OnInit, AfterViewInit  {
             },
     });
 
-    console.log('superheroe-search.component - onDelete() - row:', row);
+    environment.disableLog ? null : console.log('superheroe-search.component - onDelete() - row:', row);
 
     sub = dialogRef.afterClosed().subscribe({
       next: (result) => {
-        console.log('The dialog was closed - result:', result);
+        environment.disableLog ? null : console.log('The dialog was closed - result:', result);
         if(result !== undefined && result !== null) {
           this.delete(row);
         }
       },
       error: (err) => {
-        console.error('superheroe-search() - onDelete() - dialogRef.afterClosed() - error:', err);
+        environment.disableLog ? null : console.error('superheroe-search() - onDelete() - dialogRef.afterClosed() - error:', err);
       },
       complete: () => {
-        console.info('superheroe-search() - onDelete() - dialogRef.afterClosed() - complete');
+        environment.disableLog ? null : console.info('superheroe-search() - onDelete() - dialogRef.afterClosed() - complete');
       }
     });
 
@@ -129,23 +117,17 @@ export class SuperheroeSearchComponent implements OnInit, AfterViewInit  {
   public delete(row: any): void {
     let superheroe: ISuperheroe;
 
-    console.log('superheroe-search.component - delete() - row:', row);
+    environment.disableLog ? null : console.log('superheroe-search.component - delete() - row:', row);
 
     if(row!== undefined && row !== null) {
       superheroe = row as ISuperheroe;
-
-      //We are not subscribing to this because we are just interested in the execution of .next() which will do the job
       this._superheroeservice.deleteSuperheroe(superheroe);
     } else {
-        console.error('There is a problem with the data of the row');
+        environment.disableLog ? null : console.error('There is a problem with the data of the row');
     }
   }
-
-
-  // public onNew(): void {
-  //   this._route.navigate(['/management']);
-  // }
   /** /Buttons actions */
+
 
   public filteringTable(filterValue: string) : void {
     if(filterValue !== null && filterValue !== undefined) {
@@ -156,9 +138,9 @@ export class SuperheroeSearchComponent implements OnInit, AfterViewInit  {
       }
     } 
 
-    //We are not subscribing to this because we are just interested in the execution of .next() which will do the job
     this._superheroeservice.getAllSuperheroe();
   }
+
 
   ngOnDestroy(): void {
     this._subscriptions.forEach((sub: Subscription) => { sub?.unsubscribe(); });

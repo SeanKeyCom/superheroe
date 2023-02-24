@@ -28,7 +28,7 @@ export class FilterComponent {
     let nameFilterValue: string | null | undefined = this?.form?.get('nameFilter')?.value;
 
     if(nameFilterValue !== null && nameFilterValue !== undefined) {
-      //FIXME: Could be improved by using a debounce()
+      //FIXME: Could be improved using a debounce()
       this.name2Bfiltered.emit(nameFilterValue.toUpperCase());
     } 
   }

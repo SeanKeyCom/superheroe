@@ -1,7 +1,8 @@
 import { ISuperheroe } from './../../../../core/models/superheroe.model';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, isDevMode, OnInit, Output } from '@angular/core';
 import { Inject } from '@angular/core';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-delete-dialog',
@@ -21,7 +22,7 @@ export class DeleteDialogComponent {
   public onNoClick(): void {
     this.shOkDeletion.emit({} as ISuperheroe);
 
-    console.log('delete-dialog.component - onNoClick()');
+    environment.disableLog ? null : console.log('delete-dialog.component - onNoClick()');
 
     this.dialogRef.close();
   }

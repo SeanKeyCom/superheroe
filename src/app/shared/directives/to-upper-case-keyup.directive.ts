@@ -1,11 +1,12 @@
-import { Directive, ElementRef, HostListener, Input, OnInit } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, isDevMode, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Directive({
   selector: 'input[toUpperCaseKeyup]'
 })
 export class ToUpperCaseKeyupDirective {
   constructor(private el: ElementRef) {
-    console.log('to-upper-case.directive - constructor - ElementRef:', el);
+    environment.disableLog ? null : console.log('to-upper-case.directive - constructor - ElementRef:', el);
   }
 
   @HostListener('keyup', ['$event'])
