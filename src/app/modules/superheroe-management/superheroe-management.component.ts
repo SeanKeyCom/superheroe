@@ -1,9 +1,10 @@
 import { ISuperheroe } from './../../core/models/superheroe.model';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, isDevMode, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SuperheroeService } from 'src/app/shared/services/superheroe.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-superheroe-management',
@@ -44,10 +45,10 @@ export class SuperheroeManagementComponent implements OnInit, OnDestroy {
           this.form.patchValue(supeH);
         },
         error: (err) => {
-          console.error('An error has happened while trying to get the id from the url');
+          environment.disableLog ? null : console.error('An error has happened while trying to get the id from the url');
         },
         complete: () => {
-          console.info('superheroe-management.component - ngOnInit() - complete()');
+          environment.disableLog ? null : console.info('superheroe-management.component - ngOnInit() - complete()');
         }
       });
 
@@ -74,14 +75,14 @@ export class SuperheroeManagementComponent implements OnInit, OnDestroy {
                 this._route.navigate(['/home']);
               } else {
                 //Modal window telling the user about the error
-                console.error('Saving has not been possible!')
+                environment.disableLog ? null : console.error('Saving has not been possible!')
               }
             },
             error: (err) => {
-              console.error('Error modifiying a superheroe');
+              environment.disableLog ? null : console.error('Error modifiying a superheroe');
             },
             complete: () => {
-              console.info('Modifiying action has been fulfilled');
+              environment.disableLog ? null : console.info('Modifiying action has been fulfilled');
             }
           });
           this._subscriptions.push(sub);
@@ -92,14 +93,14 @@ export class SuperheroeManagementComponent implements OnInit, OnDestroy {
               this._route.navigate(['/home']);
             } else {
               //Modal window telling the user about the error
-              console.error('Saving has not been possible!')
+              environment.disableLog ? null : console.error('Saving has not been possible!')
             }
           },
           error: (err) => {
-            console.error('Error saving the superheroe');
+            environment.disableLog ? null : console.error('Error saving the superheroe');
           },
           complete: () => {
-            console.info('Saving action has been fulfilled');
+            environment.disableLog ? null : console.info('Saving action has been fulfilled');
           }
         });
 
@@ -107,13 +108,15 @@ export class SuperheroeManagementComponent implements OnInit, OnDestroy {
       }
     } else {
       this.form.markAllAsTouched();
-      console.error('Invalid state of the form');
+      environment.disableLog ? null : console.error('Invalid state of the form');
     }
   }
+
 
   public onCancel() : void {
     history.back();
   }
+
 
   ngOnDestroy(): void {
     this._subscriptions.forEach((sub: Subscription) => { sub?.unsubscribe(); });

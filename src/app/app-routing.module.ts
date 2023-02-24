@@ -9,7 +9,6 @@ const routes: Routes = [
   { path: 'management/:id', component: SuperheroeManagementComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', component: SuperheroeSearchComponent }
-  //{ path: '**', component: ErrorComponent }
 ];
 
 @NgModule({

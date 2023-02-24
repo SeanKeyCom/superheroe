@@ -1,13 +1,4 @@
 <div class="card">
-  <!-- <form [formGroup]="form">
-    <mat-form-field appearance="fill" class="filter">
-      <mat-label>Filter</mat-label>
-      <input matInput toUpperCaseKeyup placeholder="Search superheroes by name like..." #nameFilter id="nameFilter" (keyup)="filterTable()" formControlName="nameFilter">
-      <mat-hint>Filtering</mat-hint>
-    </mat-form-field>
-
-    <button mat-button (click)="onNew()" class="button-format">Add new Superheroe</button>
-  </form> -->
   <app-filter (name2Bfiltered)="filteringTable($event)"></app-filter>
 
   <div class="mat-elevation-z8">

@@ -15,11 +15,11 @@ import { DeleteDialogComponent } from './shared/components/dialog-modal/delete-d
 import { MatDialogModule } from '@angular/material/dialog';
 import { ToUpperCaseDirective } from './shared/directives/to-upper-case.directive';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 import { ToUpperCaseKeyupDirective } from './shared/directives/to-upper-case-keyup.directive';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { FilterComponent } from './modules/superheroe-search/filter/filter.component';
+import { SpinnerInterceptor } from './shared/interceptors/spinner.interceptor';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,6 @@ import { FilterComponent } from './modules/superheroe-search/filter/filter.compo
   imports: [
     BrowserModule,
     AppRoutingModule,
-    //BrowserAnimationsModule,
     MatPaginatorModule,
     MatTableModule,
     MatFormFieldModule,
@@ -44,7 +43,7 @@ import { FilterComponent } from './modules/superheroe-search/filter/filter.compo
     MatDialogModule,
     HttpClientModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
